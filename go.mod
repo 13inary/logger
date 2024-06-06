@@ -1,4 +1,4 @@
-module logger
+module github.com/13inary/logger
 
 go 1.21.1
 
