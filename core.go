@@ -11,7 +11,7 @@ func newConsoleCore() zapcore.Core {
 	consoleWriteSyncer := newConsoleWriter()
 	writerSyncer := zapcore.NewMultiWriteSyncer(consoleWriteSyncer) // 可以指定多个输出
 
-	return zapcore.NewCore(encoder, writerSyncer, zapcore.DebugLevel)
+	return zapcore.NewCore(encoder, writerSyncer, zapcore.InfoLevel)
 }
 
 // newFileCore 文件输出的方式
