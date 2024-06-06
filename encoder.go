@@ -23,7 +23,7 @@ func newConsoleTextEncoder() zapcore.Encoder {
 // newFileTextEncoder 日志为文件文本格式
 func newFileTextEncoder() zapcore.Encoder {
 	encoderConfig := zap.NewProductionEncoderConfig()
-	encoderConfig.EncodeLevel = zapcore.CapitalLevelEncoder
+	encoderConfig.EncodeLevel = zapcore.CapitalColorLevelEncoder
 	encoderConfig.EncodeTime = customTimeEncoder
 	encoderConfig.EncodeCaller = zapcore.FullCallerEncoder // 日志输出调用的完整路径
 	return zapcore.NewConsoleEncoder(encoderConfig)
