@@ -5,13 +5,17 @@ import (
 )
 
 // newConsoleCore 控制台输出的方式
-func newConsoleCore() zapcore.Core {
+func newConsoleCore(debugModel bool) zapcore.Core {
 	encoder := newConsoleTextEncoder()
 
 	consoleWriteSyncer := newConsoleWriter()
 	writerSyncer := zapcore.NewMultiWriteSyncer(consoleWriteSyncer) // 可以指定多个输出
 
-	return zapcore.NewCore(encoder, writerSyncer, zapcore.InfoLevel)
+	logLevel := zapcore.InfoLevel
+	if debugModel {
+		logLevel = zapcore.DebugLevel
+	}
+	return zapcore.NewCore(encoder, writerSyncer, logLevel)
 }
 
 // newFileCore 文件输出的方式

@@ -11,12 +11,12 @@ var (
 
 // InitLogger 初始化日志模块
 // logPath 若为空，则表示使用默认路径：./log/service.log
-func InitLogger(logPath string) error {
+func InitLogger(debugModel bool, logPath string) error {
 	if logPath != "" {
 		logFilePath = logPath
 	}
 
-	core := newTree()
+	core := newTree(debugModel)
 	options := newOption()
 	fasterLogger = zap.New(core, options...)
 	superLogger = fasterLogger.Sugar()
