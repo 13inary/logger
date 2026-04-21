@@ -12,8 +12,8 @@ var (
 // InitLogger 初始化日志模块。日志使用方法1：这里管理日志模块
 //
 //	logPath 若为空，则表示使用默认路径：./log/service.log
-func InitLogger(debugModel bool, logPath string) error {
-	fasterLogger, superLogger = newLogger(debugModel, logPath, 1)
+func InitLogger(consoleDebugModel bool, fileDebugModel bool, logPath string) error {
+	fasterLogger, superLogger = newLogger(consoleDebugModel, fileDebugModel, logPath, 1)
 	return nil
 }
 
@@ -21,16 +21,16 @@ func InitLogger(debugModel bool, logPath string) error {
 //
 //	logPath 若为空，则表示使用默认路径：./log/service.log
 //	callerSkip 调用栈跳过层数
-func NewLogger(debugModel bool, logPath string) (*zap.Logger, *zap.SugaredLogger) {
-	return newLogger(debugModel, logPath, 0)
+func NewLogger(consoleDebugModel bool, fileDebugModel bool, logPath string) (*zap.Logger, *zap.SugaredLogger) {
+	return newLogger(consoleDebugModel, fileDebugModel, logPath, 0)
 }
 
-func newLogger(debugModel bool, logPath string, callerSkip int) (*zap.Logger, *zap.SugaredLogger) {
+func newLogger(consoleDebugModel bool, fileDebugModel bool, logPath string, callerSkip int) (*zap.Logger, *zap.SugaredLogger) {
 	if logPath != "" {
 		logFilePath = logPath
 	}
 
-	core := newTree(debugModel)
+	core := newTree(consoleDebugModel, fileDebugModel)
 	options := newOption(callerSkip)
 	fLogger := zap.New(core, options...)
 	sLogger := fLogger.Sugar()

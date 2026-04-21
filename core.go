@@ -19,11 +19,16 @@ func newConsoleCore(debugModel bool) zapcore.Core {
 }
 
 // newFileCore 文件输出的方式
-func newFileCore() zapcore.Core {
+func newFileCore(debugModel bool) zapcore.Core {
 	encoder := newFileTextEncoder()
 
 	fileWriteSyncer := newMultiFileWriter()
 	writerSyncer := zapcore.NewMultiWriteSyncer(fileWriteSyncer) // 可以指定多个输出
 
-	return zapcore.NewCore(encoder, writerSyncer, zapcore.DebugLevel)
+	logLevel := zapcore.InfoLevel // 避免过多的debug日志频繁刷盘导致磁盘损坏
+	if debugModel {
+		logLevel = zapcore.DebugLevel
+	}
+
+	return zapcore.NewCore(encoder, writerSyncer, logLevel)
 }
